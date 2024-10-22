@@ -1,7 +1,7 @@
 import pickle
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from ml.data import process_data
-# TODO: add necessary import
+from sklearn.linear_model import LogisticRegression
 
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
@@ -19,8 +19,9 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-   # TODO: implement the function
-    pass
+   model = LogisticRegression()
+   model.fit(X_train, y_train)
+   return model
 
 
 def compute_model_metrics(y, preds):
@@ -39,9 +40,9 @@ def compute_model_metrics(y, preds):
     recall : float
     fbeta : float
     """
-    fbeta = fbeta_score(y, preds, beta=1, zero_division=1)
-    precision = precision_score(y, preds, zero_division=1)
-    recall = recall_score(y, preds, zero_division=1)
+    fbeta = fbeta_score(y, preds, beta = 1, zero_division = 1)
+    precision = precision_score(y, preds, zero_division = 1)
+    recall = recall_score(y, preds, zero_division = 1)
     return precision, recall, fbeta
 
 
@@ -59,8 +60,8 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    # TODO: implement the function
-    pass
+    preds = model.predict(X)
+    return preds
 
 def save_model(model, path):
     """ Serializes model to a file.
@@ -72,13 +73,13 @@ def save_model(model, path):
     path : str
         Path to save pickle file.
     """
-    # TODO: implement the function
-    pass
+    with open(file_path, 'wb') as f:
+        pickle.dump(instance, f)
 
 def load_model(path):
     """ Loads pickle file from `path` and returns it."""
-    # TODO: implement the function
-    pass
+    with open(file_path, 'rb') as f:
+        return pickle.load(f)
 
 
 def performance_on_categorical_slice(
