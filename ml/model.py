@@ -118,12 +118,22 @@ def performance_on_categorical_slice(
     fbeta : float
 
     """
-    # TODO: implement the function
-    X_slice, y_slice, _, _ = process_data(
-        # your code here
-        # for input data, use data in column given as "column_name", with the slice_value 
-        # use training = False
+    X_slice = data[data[column_name] == slice_value]
+    
+    if label is not None:
+        y_slice = X_slice[label]
+        X_slice = X_slice.drop(columns=[label])
+    else:
+        y_slice = pd.Series(dtype=int)
+
+    X_processed = process_data(
+        X_slice,
+        categorical_features=categorical_features,
+        training=False,
+        encoder=encoder,
+        lb=lb
     )
-    preds = # your code here to get prediction on X_slice using the inference function
+    
+    preds = model.predict(X_processed)
     precision, recall, fbeta = compute_model_metrics(y_slice, preds)
     return precision, recall, fbeta
