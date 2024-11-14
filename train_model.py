@@ -14,7 +14,7 @@ from ml.model import (
     train_model,
 )
 # TODO: load the cencus.csv data
-project_path = /root/Deploying-a-Scalable-ML-Pipeline-with-FastAPI/data/census.csv
+project_path = os.getcwd()
 data_path = os.path.join(project_path, "data", "census.csv")
 print(data_path)
 data = pd.read_csv('data/census.csv')
@@ -88,7 +88,7 @@ for col in cat_features:
 
 
 
-'''
+
 #splitting the data into a test and train set.
 train_full, test = train_test_split(cleaned_data, test_size=0.20)
 
@@ -127,7 +127,7 @@ X_test, y_test, _, _ = process_data(
     encoder=encoder,
     lb=lb,
 )
-'''
+
 # TODO: use the train_model function to train the model on the training dataset
 model = train_model(X_train, y_train)
 
