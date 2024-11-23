@@ -18,13 +18,29 @@ project_path = os.getcwd()
 data_path = os.path.join(project_path, "data", "census.csv")
 print(data_path)
 data = pd.read_csv('data/census.csv')
+cleaned_data = data.copy()
 
 # TODO: split the provided data to have a train dataset and a test dataset
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
 
+#Here we are going to split the dataset into both a training and test set.
+train_full, test = train_test_split(cleaned_data, test_size = 0.20, random_state = 42)
+
 # First, we will define the number of folds we want.
 n_splits = 5
-kf = KFold(n_splits=n_splits)
+kf = KFold(n_splits = n_splits, shuffle = True, random_state = 42)
+
+#Next, we need to make a Categorical features list
+cat_features = [
+    "workclass",
+    "education",
+    "marital-status",
+    "occupation",
+    "relationship",
+    "race",
+    "sex",
+    "native-country",
+]
 
 #Here we will collect the metrecs for each fold.
 all_metrics = []
@@ -62,7 +78,7 @@ print(f"Average Precision: {avg_precision:.4f} | Average Recall: {avg_recall:.4f
 X_test, y_test, _, _ = process_data(
     test,
     categorical_features = cat_features,
-    label = "salary",
+    label = 'salary',
     training = False,
     encoder = encoder,
     lb = lb,
@@ -78,15 +94,29 @@ print(f"Test Precision: {p:.4f} | Test Recall: {r:.4f} | Test F1: {fb:.4f}")
 for col in cat_features:
     for slicevalue in sorted(test[col].unique()):
         count = test[test[col] == slicevalue].shape[0]
+
+        test_slice = test[test[col] == slicevalue]
+        X_slice, y_slice, _, _ = process_data(
+            test_slice,
+            categorical_features = cat_features,
+            label = 'salary',
+            training = False,
+            encoder = encoder,
+            lb = lb
+        )
+        preds_slice = inference(model, X_slice)
         p, r, fb = performance_on_categorical_slice(
-            test, col, slicevalue, model
+            test_slice,
+            col,
+            slicevalue,
+            model,
+            y_slice,
+            encoder,
+            lb
         )
         with open("slice_output.txt", "a") as f:
             print(f"{col}: {slicevalue}, Count: {count:,}", file = f)
             print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}", file = f)
-
-
-
 
 
 #splitting the data into a test and train set.
@@ -102,7 +132,7 @@ model = train_model(X_train, y_train)
 # DO NOT MODIFY
 cat_features = [
     "workclass",
-    "education",categorical_features
+    "education",
     "marital-status",
     "occupation",
     "relationship",
