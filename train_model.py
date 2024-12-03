@@ -109,11 +109,11 @@ for col in cat_features:
             test_slice,
             col,
             slicevalue,
-            model,
             y_slice,
             encoder,
-            lb
-        )
+            lb,
+            model
+        )    
         with open("slice_output.txt", "a") as f:
             print(f"{col}: {slicevalue}, Count: {count:,}", file = f)
             print(f"Precision: {p:.4f} | Recall: {r:.4f} | F1: {fb:.4f}", file = f)
