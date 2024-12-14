@@ -2,13 +2,13 @@ import json
 
 import requests
 
-# TODO: send a GET using the URL http://127.0.0.1:8000
-r = None # Your code here
+#send a GET using the URL http://127.0.0.1:8000
+r = requests.get('http://127.0.0.1:8000')
 
-# TODO: print the status code
-# print()
-# TODO: print the welcome message
-# print()
+#print the status code
+print(f'GET status code: {r.status_code}')
+#print the welcome message
+print(f'GET response: {r.json()}')
 
 
 
@@ -29,10 +29,11 @@ data = {
     "native-country": "United-States",
 }
 
-# TODO: send a POST using the data above
-r = None # Your code here
+#send a POST using the data above
+r = requests.post('http://127.0.0.1:8000/data/', json = data)
 
-# TODO: print the status code
-# print()
-# TODO: print the result
-# print()
+#print the status code
+print(f'POST status code: {r.status_code}')
+
+#print the result
+print(f'POST response: {r.json()}')
