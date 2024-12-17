@@ -3,7 +3,12 @@ from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
 
 def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
+    X, 
+    categorical_features = [],
+    label = None, 
+    training = True, 
+    encoder = None,
+    lb = None
 ):
     """ Process the data used in the machine learning pipeline.
 
@@ -51,10 +56,10 @@ def process_data(
         y = np.array([])
 
     X_categorical = X[categorical_features].values
-    X_continuous = X.drop(*[categorical_features], axis=1)
+    X_continuous = X.drop(*[categorical_features], axis = 1)
 
     if training is True:
-        encoder = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
+        encoder = OneHotEncoder(sparse_output=False, handle_unknown = 'ignore')
         lb = LabelBinarizer()
         X_categorical = encoder.fit_transform(X_categorical)
         y = lb.fit_transform(y.values).ravel()
@@ -66,7 +71,7 @@ def process_data(
         except AttributeError:
             pass
 
-    X = np.concatenate([X_continuous, X_categorical], axis=1)
+    X = np.concatenate([X_continuous, X_categorical], axis = 1)
     return X, y, encoder, lb
 
 def apply_label(inference):

@@ -29,6 +29,7 @@ class Data(BaseModel):
 project_path = os.getcwd()
 
 # Set the correct paths for the model and encoder
+project_path = os.getcwd()
 encoder_path = os.path.join(project_path, 'model', 'encoder.pkl')
 model_path = os.path.join(project_path, 'model', 'model.pkl')
 
@@ -36,10 +37,10 @@ model_path = os.path.join(project_path, 'model', 'model.pkl')
 encoder = load_model(encoder_path)
 model = load_model(model_path)
 
-# TODO: create a RESTful API using FastAPI
+#create a RESTful API using FastAPI
 app = FastAPI()
 
-# TODO: create a GET on the root giving a welcome message
+#create a GET on the root giving a welcome message
 @app.get("/")
 async def get_root():
     """ Say hello!"""
@@ -68,11 +69,14 @@ async def post_inference(data: Data):
         "native-country",
     ]
     data_processed, _, _, _ = process_data(
-        data=data,
-        categorical_features=cat_features,
-        training=False,
+        X = data, 
+        categorical_features = [],
+        label = None, 
+        training = True, 
+        encoder = None,
+        lb = None
     )
     _inference = inference(model, data_processed)
     result = apply_label(_inference)
 
-    return {"result": apply_label(_inference)}
+    return {'result': apply_label(_inference)}
