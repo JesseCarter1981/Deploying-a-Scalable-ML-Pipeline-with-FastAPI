@@ -70,11 +70,11 @@ async def post_inference(data: Data):
     ]
     data_processed, _, _, _ = process_data(
         X = data, 
-        categorical_features = [],
-        label = None, 
-        training = True, 
-        encoder = None,
-        lb = None
+        categorical_features = cat_features,
+        #label = None, 
+        training = False, 
+        encoder = encoder,
+        #lb = None
     )
     _inference = inference(model, data_processed)
     result = apply_label(_inference)
