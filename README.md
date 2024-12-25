@@ -29,3 +29,15 @@ Github link - https://github.com/JesseCarter1981/Deploying-a-Scalable-ML-Pipelin
 *  Create a RESTful API using FastAPI this must implement:
     * GET on the root giving a welcome message.
     * POST that does model inference.
+
+Continuous Integration
+
+![continous_integration](https://github.com/user-attachments/assets/2fc19f73-20ea-4ecf-a817-1151890c4a77)
+
+Run Local API
+
+![run_local_api](https://github.com/user-attachments/assets/15324556-632d-41b7-b50e-e43b4557dbae)
+
+Unit Test
+
+![unit_test](https://github.com/user-attachments/assets/862e7809-fcb4-40b8-bcca-f31408903698)
