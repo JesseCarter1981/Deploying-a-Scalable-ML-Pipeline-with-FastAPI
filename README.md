@@ -29,6 +29,8 @@ Github link - https://github.com/JesseCarter1981/Deploying-a-Scalable-ML-Pipelin
 *  Create a RESTful API using FastAPI this must implement:
     * GET on the root giving a welcome message.
     * POST that does model inference.
+ 
+# Image Library for the project
 
 Continuous Integration
 
